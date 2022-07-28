@@ -1,11 +1,25 @@
 import React from 'react';
 import '../index.css'
 
+
 const WareItem = ({ware})=> {
+
+    ware.isChecked = false
+
+    const handlerCheck = () => {
+        if (ware.isChecked === false){
+            ware.isChecked = true
+            console.log(ware.isChecked)
+        }else{
+            ware.isChecked = false
+            console.log(ware.isChecked)
+        }
+    }
+
     return (
         <tr className="tab-content">
             <td>
-                <input type="checkbox" id="checkbox"></input>
+                <input type="checkbox" id="checkbox" onChange={handlerCheck}></input>
                 {ware.name}
             </td>
             <td>
@@ -24,9 +38,12 @@ const WareItem = ({ware})=> {
     )
 }
 
-const WareList = ({wares}) => {
+const WareList = ({wares, getOrderData}) => {
+
+    const order = JSON.parse(JSON.stringify(wares, null, 2))
+
     return (
-        <div >
+        <div>
             <table className="table">
                 <th>
                     Название
@@ -43,15 +60,11 @@ const WareList = ({wares}) => {
                 <th>
                     Доступно в продаже
                 </th>
-                {wares.map((ware) => <WareItem ware={ware} />)}
+                {order.map((ware) => <WareItem ware={ware}/>)}
             </table>
-            <button>Добавить в заказ</button>
-            <button> Фильтрация по названию</button>
-            <button> Фильтрация по коду</button>
+            <button onClick={() => getOrderData(order)}>Добавить в заказ</button>
         </div>
     )
 }
 
 export default WareList
-
-

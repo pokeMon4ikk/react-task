@@ -9,14 +9,31 @@ import wares from './items/wares.json'
 import Profile from './components/Profile.js'
 
 
-
 class Main extends React.Component{
     constructor(props) {
         super(props)
         this.state = {
             is_authenticated: false,
-            wares: wares
+            orders: JSON.parse(JSON.stringify(wares, null, 2))
         }
+    }
+
+    getOrderData(order){
+        if (this.is_authenticated()){
+            alert("Заказ оформлен!")
+            this.setState({
+                orders: order
+            })
+        }else{
+            alert("Необходима авторизация!")
+        }
+    }
+
+    deleteOrder(order){
+        this.setState({
+            orders: JSON.parse(JSON.stringify(wares, null, 2))
+        })
+        alert("Заказ отменен!")
     }
 
     setAuth(auth){
@@ -51,16 +68,18 @@ class Main extends React.Component{
                                 <Link to="/catalog">Каталог</Link>
                             </li>
                             <li>
-                                {this.is_authenticated() ? <button onClick={()=>this.logout()}>Logout</button> :
-                                <Link to='/login'>Login</Link>}
+                                {this.is_authenticated() ? <button onClick={()=>this.logout()}>Выйти</button> :
+                                <Link to='/login'>Войти</Link>}
                             </li>
                         </ul>
                     </nav>
                     <Routes>
                         <Route exact path="/" element={<MainContent />} />
-                        <Route exact path="/catalog" element={<WareList wares={this.state.wares}/>}/>
-                        <Route exact path="/login" element={this.is_authenticated() ? <Navigate to="/profile"/> : <Auth getAuth={() => this.getAuth()} />}/>
-                        <Route exact path="/profile" element={this.is_authenticated() ? <Profile /> : <Navigate to="/login" />}/>
+                        <Route exact path="/catalog" element={<WareList wares={this.state.orders} getOrderData={(order) => this.getOrderData(order)} />}/>
+                        <Route exact path="/login" element={this.is_authenticated() ? <Navigate to="/profile"/> :
+                        <Auth getAuth={(login, password) => this.getAuth(login, password)} />}/>
+                        <Route exact path="/profile" element={this.is_authenticated() ? <Profile orders={this.state.orders}
+                        deleteOrder={(order) => this.deleteOrder(order)} /> : <Navigate to="/login" />}/>
                     </Routes>
                     <div className="footer"></div>
                 </BrowserRouter>
