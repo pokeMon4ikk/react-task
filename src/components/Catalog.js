@@ -9,10 +9,8 @@ const WareItem = ({ware})=> {
     const handlerCheck = () => {
         if (ware.isChecked === false){
             ware.isChecked = true
-            console.log(ware.isChecked)
         }else{
             ware.isChecked = false
-            console.log(ware.isChecked)
         }
     }
 
@@ -38,12 +36,16 @@ const WareItem = ({ware})=> {
     )
 }
 
-const WareList = ({wares, getOrderData}) => {
+const WareList = ({wares, getOrderData, SortedPriceData, CancelSortAndFilters, FilterName}) => {
 
     const order = JSON.parse(JSON.stringify(wares, null, 2))
 
     return (
         <div>
+            <button onClick={() =>  FilterName(order)}>Фильтрация по имени</button>
+            <button onClick={() => SortedPriceData(order)}>Сортировка по цене</button>
+            <button onClick={() => CancelSortAndFilters()}>Отменить сортировку</button>
+            <button onClick={() => CancelSortAndFilters()}>Убрать фильтры</button>
             <table className="table">
                 <th>
                     Название
