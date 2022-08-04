@@ -1,7 +1,6 @@
 import React from 'react';
 import '../index.css'
 
-
 const WareItem = ({ware})=> {
 
     ware.isChecked = false
@@ -23,20 +22,20 @@ const WareItem = ({ware})=> {
             <td>
                 {ware.description}
             </td>
-            <td>
+            <td className="td_center">
                 {ware.code}
             </td>
-            <td>
+            <td className="td_center">
                 {ware.price}
             </td>
-            <td>
+            <td className="td_center">
                 {ware.quantity}
             </td>
         </tr>
     )
 }
 
-const WareList = ({wares, getOrderData, SortedPriceData, CancelSortAndFilters, FilterName}) => {
+const WareList = ({wares, getOrderData, SortedPriceData, CancelSortAndFilters, FilterName, SortedPriceDataUp, SortedPriceDataDn}) => {
 
     const order = JSON.parse(JSON.stringify(wares, null, 2))
 
@@ -44,8 +43,9 @@ const WareList = ({wares, getOrderData, SortedPriceData, CancelSortAndFilters, F
         <div>
             <button onClick={() =>  FilterName(order)}>Фильтрация по имени</button>
             <button onClick={() => SortedPriceData(order)}>Сортировка по цене</button>
-            <button onClick={() => CancelSortAndFilters()}>Отменить сортировку</button>
-            <button onClick={() => CancelSortAndFilters()}>Убрать фильтры</button>
+            <button onClick={() => SortedPriceDataUp(order)}>🠕</button>
+            <button onClick={() => SortedPriceDataDn(order)}>🠗</button>
+            <button onClick={() => CancelSortAndFilters()}>✖</button>
             <table className="table">
                 <th>
                     Название

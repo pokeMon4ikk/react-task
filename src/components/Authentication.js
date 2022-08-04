@@ -50,12 +50,12 @@ class Auth extends React.Component{
 
     render() {
         return (
-            <form onSubmit={(event)=> this.handleSubmit(event)}>
-                <input type="text" name="login" placeholder="login"
+            <form className="i_form" onSubmit={(event)=> this.handleSubmit(event)}>
+                <input className="input_form" type="text" name="login" placeholder="Логин"
                     value={this.state.login} onChange={(event)=>this.handleChange(event)} />
-                <input type="password" name="password" placeholder="password"
+                <input className="input_form" type="password" name="password" placeholder="Пароль"
                     value={this.state.password} onChange={(event)=>this.handleChange(event)} />
-                <input type="submit" value="Login"></input>
+                <input className="input_form" type="submit" value="Войти"></input>
             </form>
         );
     }

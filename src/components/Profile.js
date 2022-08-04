@@ -1,30 +1,33 @@
 import React from 'react';
+import '../index.css'
 import avatar from "../img/avatar.png"
 
-const OrderItem = ({order}) => {
+const OrderItem = ({order, deleteOrderItem}) => {
+
     if(order.isChecked === true){
         return(
-            <tr className="tab-content">
+            <tr className="tab-content prof">
                 <td>
                     {order.name}
                 </td>
                 <td>
                     {order.description}
                 </td>
-                <td>
+                <td className="td_center">
                     {order.code}
                 </td>
-                <td>
+                <td className="td_center">
                     {order.price}
                 </td>
+                <button onClick={() => deleteOrderItem(order.id)}>Удалить</button>
             </tr>
         )
     }
 }
 
-const Profile = ({orders, deleteOrder}) => {
+const Profile = ({order, deleteOrder, deleteOrderItem}) => {
     return (
-        <div>
+        <div className="profile">
              <div>
                 <div>
                     <img src={avatar} alt="avatar"></img>
@@ -34,8 +37,8 @@ const Profile = ({orders, deleteOrder}) => {
                 </div>
                 <div>
                     <p>Активный заказ:</p>
-                    <div>
-                        <table className="table">
+                    <div className="prof">
+                        <table className="table prof">
                             <th>
                                 Товар
                             </th>
@@ -48,9 +51,9 @@ const Profile = ({orders, deleteOrder}) => {
                             <th>
                                 Цена
                             </th>
-                            {orders.map((order) => <OrderItem order={order}/>)}
+                            {order.map((order) => <OrderItem order={order} deleteOrderItem={deleteOrderItem}/>)}
                         </table>
-                        <button onClick={() => deleteOrder(orders)}>Отменить заказ</button>
+                        <button onClick={() => deleteOrder()}>Отменить заказ</button>
                     </div>
                 </div>
             </div>

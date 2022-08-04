@@ -5,7 +5,7 @@ import '../index.css'
 class MainContent extends React.Component{
     render(){
         return(
-            <div>
+            <div className="main">
                 Тестовое приложение по фронтенду на реакте
             </div>
         );
