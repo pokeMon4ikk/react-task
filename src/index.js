@@ -7,7 +7,7 @@ import MainContent from './components/Main.js'
 import WareList from './components/Catalog.js'
 import wares from './items/wares.json'
 import Profile from './components/Profile.js'
-
+import OrderList from './components/OrdersList.js'
 
 class Main extends React.Component{
     constructor(props) {
@@ -19,8 +19,10 @@ class Main extends React.Component{
             history: [{
                 orders: [].fill(null)
             }],
-            orderNumber: 1,
-            sort: false
+            orderNumber: 0,
+            sort: false,
+            login: '',
+            password: '',
         }
     }
 
@@ -48,19 +50,27 @@ class Main extends React.Component{
     }
 
     setAuth(auth){
-        this.setState({is_authenticated: auth})
+        this.setState({
+            is_authenticated: auth
+        })
     }
 
-    is_authenticated(){
-        return this.state.is_authenticated !== false
-    }
+    is_authenticated(){return this.state.is_authenticated !== false}
 
     logout() {
         this.setAuth(false)
+        this.setState({
+            login: '',
+            password: ''
+        })
     }
 
     getAuth(login, password){
         this.setAuth()
+        this.setState({
+            login: login,
+            password: password
+        })
     }
 
     SortedPriceData(items){
@@ -115,6 +125,27 @@ class Main extends React.Component{
         }
     }
 
+    saveOrderInHistory(order){
+        const history = this.state.history.slice(0, this.state.orderNumber + 1);
+        const current = history[history.length - 1];
+        const orders = current.orders.slice();
+
+        orders[this.state.login] = order.filter((item) => item.isChecked === true);
+
+        this.setState({
+            history: history.concat([{
+                orders: orders
+            }]),
+            orderNumber: history.length,
+        });
+    }
+
+    formOrder(order){
+        this.getOrderData(order)
+        this.saveOrderInHistory(order)
+    }
+
+
     render(){
         return(
             <div>
@@ -131,21 +162,23 @@ class Main extends React.Component{
                                 <Link to="/catalog">Каталог</Link>
                             </li>
                             <li className="nav_link last">
-                                {this.is_authenticated() ? <button onClick={()=>this.logout()}>Выйти</button> :
+                                {this.is_authenticated() ? <button className="btn" onClick={()=>this.logout()}>Выйти</button> :
                                 <Link to='/login'>Войти</Link>}
                             </li>
                         </ul>
                     </nav>
                     <Routes>
                         <Route exact path="/" element={<MainContent />} />
-                        <Route exact path="/catalog" element={<WareList wares={this.state.wares} getOrderData={(order) => this.getOrderData(order)}
+                        <Route exact path="/catalog" element={<WareList wares={this.state.wares}
                         SortedPriceData={(item) => this.SortedPriceData(item)} CancelSortAndFilters={() => this.CancelSortAndFilters()}
                          FilterName={(items) => this.FilterName(items)} SortedPriceDataUp={(items) => this.SortedPriceDataUp(items)}
-                          SortedPriceDataDn={(items) => this.SortedPriceDataDn(items)} />}/>
+                          SortedPriceDataDn={(items) => this.SortedPriceDataDn(items)} formOrder={(order) => this.formOrder(order)}/>}/>
                         <Route exact path="/login" element={this.is_authenticated() ? <Navigate to="/profile"/> :
                         <Auth getAuth={(login, password) => this.getAuth(login, password)} />}/>
                         <Route exact path="/profile" element={this.is_authenticated() ? <Profile order={this.state.order}
                         deleteOrder={() => this.deleteOrder()} deleteOrderItem={(id) => this.deleteOrderItem(id)}/> : <Navigate to="/login" />}/>
+                        <Route exact path="/profile/ordersHistory" element={this.is_authenticated() ? <OrderList orders={this.state.order} history={this.state.history} login={this.state.login} />
+                        :  <Navigate to="/login" />} />
                     </Routes>
                     <div className="footer"></div>
                 </BrowserRouter>

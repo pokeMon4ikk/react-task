@@ -1,6 +1,8 @@
 import React from 'react';
 import '../index.css'
 import avatar from "../img/avatar.png"
+import {Link} from 'react-router-dom'
+
 
 const OrderItem = ({order, deleteOrderItem}) => {
 
@@ -19,13 +21,14 @@ const OrderItem = ({order, deleteOrderItem}) => {
                 <td className="td_center">
                     {order.price}
                 </td>
-                <button onClick={() => deleteOrderItem(order.id)}>Удалить</button>
+                <button className="btn" onClick={() => deleteOrderItem(order.id)}>Удалить</button>
             </tr>
         )
     }
 }
 
 const Profile = ({order, deleteOrder, deleteOrderItem}) => {
+
     return (
         <div className="profile">
              <div>
@@ -53,7 +56,8 @@ const Profile = ({order, deleteOrder, deleteOrderItem}) => {
                             </th>
                             {order.map((order) => <OrderItem order={order} deleteOrderItem={deleteOrderItem}/>)}
                         </table>
-                        <button onClick={() => deleteOrder()}>Отменить заказ</button>
+                        <button className="btn" onClick={() => deleteOrder()}>Отменить заказ</button>
+                        <Link to='/profile/ordersHistory' className="nav_link change">Перейти к истории заказов</Link>
                     </div>
                 </div>
             </div>

@@ -35,7 +35,7 @@ const WareItem = ({ware})=> {
     )
 }
 
-const WareList = ({wares, getOrderData, SortedPriceData, CancelSortAndFilters, FilterName, SortedPriceDataUp, SortedPriceDataDn}) => {
+const WareList = ({wares, SortedPriceData, CancelSortAndFilters, FilterName, SortedPriceDataUp, SortedPriceDataDn, formOrder}) => {
 
     const order = JSON.parse(JSON.stringify(wares, null, 2))
 
@@ -64,7 +64,7 @@ const WareList = ({wares, getOrderData, SortedPriceData, CancelSortAndFilters, F
                 </th>
                 {order.map((ware) => <WareItem ware={ware}/>)}
             </table>
-            <button onClick={() => getOrderData(order)}>Добавить в заказ</button>
+            <button className="btn" onClick={() => formOrder(order)}>Добавить в заказ</button>
         </div>
     )
 }
