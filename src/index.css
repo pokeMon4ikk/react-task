@@ -1,0 +1,73 @@
+.nav{
+    background-color: #f99a9ae0;
+    margin-bottom: 5px;
+}
+
+.nav_link {
+    text-align: center;
+    display: inline-block;
+    margin: 15px;
+    font-size: 20px;
+    text-decoration: none;
+    color: black;
+}
+
+.last {
+    margin-left: 75%;
+    display: inline-block;
+}
+
+.nav_link a {
+    color: black;
+    text-align:center;
+    font-weight: normal;
+    font-style: normal;
+}
+
+.table {
+    margin: 30px;
+    overflow: auto;
+    top: 25%;
+    border: 1px solid;
+    font-size: 20px;
+    color: black;
+}
+
+.table th {
+    border: 1px solid;
+}
+.tab-content td {
+     border: 1px solid;
+}
+
+.td_center {
+    text-align:center;
+}
+
+.input_form {
+    margin: 5px;
+    display: flex;
+    flex-direction: column;
+    font-size: 20px;
+}
+
+.profile{
+    font-size: 20px;
+}
+
+.main{
+    font-size: 20px;
+    text-align: center;
+    margin-top: 200px;
+}
+
+.btn {
+    font-size: 18px;
+    margin: 5px;
+}
+
+.tab{
+    margin-left: 450px;
+    font-size: 22px;
+}
+
