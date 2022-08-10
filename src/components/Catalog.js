@@ -5,9 +5,12 @@ const WareItem = ({ware})=> {
 
     ware.isChecked = false
 
+    const date = new Date()
+
     const handlerCheck = () => {
         if (ware.isChecked === false){
             ware.isChecked = true
+            ware.date = date.toLocaleString()
         }else{
             ware.isChecked = false
         }
@@ -41,11 +44,11 @@ const WareList = ({wares, SortedPriceData, CancelSortAndFilters, FilterName, Sor
 
     return (
         <div>
-            <button onClick={() =>  FilterName(order)}>Фильтрация по имени</button>
-            <button onClick={() => SortedPriceData(order)}>Сортировка по цене</button>
-            <button onClick={() => SortedPriceDataUp(order)}>🠕</button>
-            <button onClick={() => SortedPriceDataDn(order)}>🠗</button>
-            <button onClick={() => CancelSortAndFilters()}>✖</button>
+            <button className="btn" onClick={() =>  FilterName(order)}>Фильтрация по имени</button>
+            <button className="btn" onClick={() => SortedPriceData(order)}>Сортировка по цене</button>
+            <button className="btn" onClick={() => SortedPriceDataUp(order)}>🠕</button>
+            <button className="btn" onClick={() => SortedPriceDataDn(order)}>🠗</button>
+            <button className="btn" onClick={() => CancelSortAndFilters()}>✖</button>
             <table className="table">
                 <th>
                     Название

@@ -3,6 +3,7 @@ import '../index.css';
 import {Link} from 'react-router-dom'
 
 const Order = ({order}) => {
+
     return(
         <tr className="tab-content prof">
             <td>
@@ -17,19 +18,32 @@ const Order = ({order}) => {
             <td className="td_center">
                 {order.price}
             </td>
+            <td className="td_center">
+                {order.date}
+            </td>
         </tr>
     )
 }
 
-const OrderList = ({orders, history, login}) => {
+const OrderList = ({history, login}) => {
 
-    const allOrders = history.map(order => order).slice(1)
-    console.log(allOrders)
+    const allOrders = history.map(order => order.orders).slice(1)
+
+    const all_ord_user = []
+
+    for(let i = 0; i < allOrders.length; i++){
+        const orderVal = Object.values(allOrders[i])
+        for(let j = 0; j < orderVal.length; j++){
+            all_ord_user.push(orderVal[j])
+        }
+    }
+
+    console.log(all_ord_user)
 
     return(
         <div>
             <Link to='/profile' className="nav_link change">Назад</Link>
-            <h3> Заказ № </h3>
+            <h3 className="tab">Список заказанных товаров</h3>
             <table className="table">
                 <th>
                     Название
@@ -43,11 +57,13 @@ const OrderList = ({orders, history, login}) => {
                 <th>
                     Цена
                 </th>
-                {allOrders.map((order) => <Order order={order}/>)}
+                <th>
+                    Дата заказа
+                </th>
+                {all_ord_user.map(order => order.map((order) => <Order order={order}/>))}
             </table>
         </div>
     )
-
 
 }
 

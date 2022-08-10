@@ -45,7 +45,7 @@ class Main extends React.Component{
 
     deleteOrderItem(id){
         this.setState({
-            order: this.state.order.filter((order) => order.id !== id)
+            order: this.state.order.filter((order) => order.id !== id),
         })
     }
 
@@ -145,7 +145,6 @@ class Main extends React.Component{
         this.saveOrderInHistory(order)
     }
 
-
     render(){
         return(
             <div>
@@ -176,8 +175,10 @@ class Main extends React.Component{
                         <Route exact path="/login" element={this.is_authenticated() ? <Navigate to="/profile"/> :
                         <Auth getAuth={(login, password) => this.getAuth(login, password)} />}/>
                         <Route exact path="/profile" element={this.is_authenticated() ? <Profile order={this.state.order}
-                        deleteOrder={() => this.deleteOrder()} deleteOrderItem={(id) => this.deleteOrderItem(id)}/> : <Navigate to="/login" />}/>
-                        <Route exact path="/profile/ordersHistory" element={this.is_authenticated() ? <OrderList orders={this.state.order} history={this.state.history} login={this.state.login} />
+                        deleteOrder={() => this.deleteOrder()} deleteOrderItem={(id) => this.deleteOrderItem(id)}
+                        login={this.state.login}/> : <Navigate to="/login" />}/>
+                        <Route exact path="/profile/ordersHistory" element={this.is_authenticated() ?
+                        <OrderList orders={this.state.order} history={this.state.history} login={this.state.login} />
                         :  <Navigate to="/login" />} />
                     </Routes>
                     <div className="footer"></div>

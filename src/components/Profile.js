@@ -27,8 +27,7 @@ const OrderItem = ({order, deleteOrderItem}) => {
     }
 }
 
-const Profile = ({order, deleteOrder, deleteOrderItem}) => {
-
+const Profile = ({order, deleteOrder, deleteOrderItem, login}) => {
     return (
         <div className="profile">
              <div>
