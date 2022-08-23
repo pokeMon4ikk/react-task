@@ -3,7 +3,6 @@ import '../index.css';
 import {Link} from 'react-router-dom'
 
 const Order = ({order}) => {
-
     return(
         <tr className="tab-content prof">
             <td>
@@ -29,16 +28,32 @@ const OrderList = ({history, login}) => {
 
     const allOrders = history.map(order => order.orders).slice(1)
 
-    const all_ord_user = []
+    const all_ord_user1 = []
+    const all_ord_user2 = []
 
     for(let i = 0; i < allOrders.length; i++){
-        const orderVal = Object.values(allOrders[i])
-        for(let j = 0; j < orderVal.length; j++){
-            all_ord_user.push(orderVal[j])
+        const orderVal1 = Object.values(allOrders[i])
+        const orderKey1 = Object.keys(allOrders[i])
+        for(let a = 0; a < orderKey1.length; a++){
+            if (login === orderKey1[a]){
+                for(let j = 0; j < orderVal1.length; j++){
+                    all_ord_user1.push(orderVal1[j])
+                }
+            }
         }
     }
 
-    console.log(all_ord_user)
+    for(let i = 0; i < allOrders.length; i++){
+        const orderVal2 = Object.values(allOrders[i])
+        const orderKey2 = Object.keys(allOrders[i])
+        for(let a = 0; a < orderKey2.length; a++){
+            if (login === orderKey2[a]){
+                for(let j = 0; j < orderVal2.length; j++){
+                    all_ord_user2.push(orderVal2[j])
+                }
+            }
+        }
+    }
 
     return(
         <div>
@@ -60,11 +75,11 @@ const OrderList = ({history, login}) => {
                 <th>
                     Дата заказа
                 </th>
-                {all_ord_user.map(order => order.map((order) => <Order order={order}/>))}
+                {login === 'User1' ? all_ord_user1.map(order => order.map((order) => <Order order={order}/>)) :
+                all_ord_user2.map(order => order.map((order) => <Order order={order}/>)) }
             </table>
         </div>
     )
-
 }
 
 export default OrderList

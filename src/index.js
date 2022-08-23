@@ -9,6 +9,7 @@ import wares from './items/wares.json'
 import Profile from './components/Profile.js'
 import OrderList from './components/OrdersList.js'
 
+
 class Main extends React.Component{
     constructor(props) {
         super(props)
@@ -55,7 +56,9 @@ class Main extends React.Component{
         })
     }
 
-    is_authenticated(){return this.state.is_authenticated !== false}
+    is_authenticated(){
+        return this.state.is_authenticated !== false
+    }
 
     logout() {
         this.setAuth(false)
@@ -126,7 +129,7 @@ class Main extends React.Component{
     }
 
     saveOrderInHistory(order){
-        const history = this.state.history.slice(0, this.state.orderNumber + 1);
+        const history= this.state.history.slice(0, this.state.orderNumber + 1);
         const current = history[history.length - 1];
         const orders = current.orders.slice();
 
@@ -144,6 +147,7 @@ class Main extends React.Component{
         this.getOrderData(order)
         this.saveOrderInHistory(order)
     }
+
 
     render(){
         return(
@@ -171,15 +175,14 @@ class Main extends React.Component{
                         <Route exact path="/catalog" element={<WareList wares={this.state.wares}
                         SortedPriceData={(item) => this.SortedPriceData(item)} CancelSortAndFilters={() => this.CancelSortAndFilters()}
                          FilterName={(items) => this.FilterName(items)} SortedPriceDataUp={(items) => this.SortedPriceDataUp(items)}
-                          SortedPriceDataDn={(items) => this.SortedPriceDataDn(items)} formOrder={(order) => this.formOrder(order)}/>}/>
+                          SortedPriceDataDn={(items) => this.SortedPriceDataDn(items)} formOrder={(order) => this.formOrder(order)} login={this.state.login}/>}/>
                         <Route exact path="/login" element={this.is_authenticated() ? <Navigate to="/profile"/> :
                         <Auth getAuth={(login, password) => this.getAuth(login, password)} />}/>
                         <Route exact path="/profile" element={this.is_authenticated() ? <Profile order={this.state.order}
                         deleteOrder={() => this.deleteOrder()} deleteOrderItem={(id) => this.deleteOrderItem(id)}
-                        login={this.state.login}/> : <Navigate to="/login" />}/>
+                        login={this.state.login}  history={this.state.history}/> : <Navigate to="/login" />}/>
                         <Route exact path="/profile/ordersHistory" element={this.is_authenticated() ?
-                        <OrderList orders={this.state.order} history={this.state.history} login={this.state.login} />
-                        :  <Navigate to="/login" />} />
+                        <OrderList orders={this.state.order} history={this.state.history} login={this.state.login}/> :  <Navigate to="/login" />} />
                     </Routes>
                     <div className="footer"></div>
                 </BrowserRouter>
