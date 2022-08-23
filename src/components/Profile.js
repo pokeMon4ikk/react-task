@@ -27,7 +27,10 @@ const OrderItem = ({order, deleteOrderItem}) => {
     }
 }
 
-const Profile = ({order, deleteOrder, deleteOrderItem, login}) => {
+const Profile = ({order, deleteOrder, deleteOrderItem, login, history}) => {
+
+    const orderUser = order.filter(order => order.login === login)
+
     return (
         <div className="profile">
              <div>
@@ -35,7 +38,7 @@ const Profile = ({order, deleteOrder, deleteOrderItem, login}) => {
                     <img src={avatar} alt="avatar"></img>
                 </div>
                 <div>
-                    <p>Name: Пользователь</p>
+                    <p>{login}</p>
                 </div>
                 <div>
                     <p>Активный заказ:</p>
@@ -53,7 +56,7 @@ const Profile = ({order, deleteOrder, deleteOrderItem, login}) => {
                             <th>
                                 Цена
                             </th>
-                            {order.map((order) => <OrderItem order={order} deleteOrderItem={deleteOrderItem}/>)}
+                            {orderUser.map((order) => <OrderItem order={order} deleteOrderItem={deleteOrderItem}/>)}
                         </table>
                         <button className="btn" onClick={() => deleteOrder()}>Отменить заказ</button>
                         <Link to='/profile/ordersHistory' className="nav_link change">Перейти к истории заказов</Link>

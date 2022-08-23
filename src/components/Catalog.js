@@ -1,7 +1,7 @@
 import React from 'react';
 import '../index.css'
 
-const WareItem = ({ware})=> {
+const WareItem = ({ware, login})=> {
 
     ware.isChecked = false
 
@@ -11,6 +11,7 @@ const WareItem = ({ware})=> {
         if (ware.isChecked === false){
             ware.isChecked = true
             ware.date = date.toLocaleString()
+            ware.login = login
         }else{
             ware.isChecked = false
         }
@@ -38,7 +39,7 @@ const WareItem = ({ware})=> {
     )
 }
 
-const WareList = ({wares, SortedPriceData, CancelSortAndFilters, FilterName, SortedPriceDataUp, SortedPriceDataDn, formOrder}) => {
+const WareList = ({wares, SortedPriceData, CancelSortAndFilters, FilterName, SortedPriceDataUp, SortedPriceDataDn, formOrder, login}) => {
 
     const order = JSON.parse(JSON.stringify(wares, null, 2))
 
@@ -65,7 +66,7 @@ const WareList = ({wares, SortedPriceData, CancelSortAndFilters, FilterName, Sor
                 <th>
                     Доступно в продаже
                 </th>
-                {order.map((ware) => <WareItem ware={ware}/>)}
+                {order.map((ware) => <WareItem ware={ware} login={login}/>)}
             </table>
             <button className="btn" onClick={() => formOrder(order)}>Добавить в заказ</button>
         </div>
